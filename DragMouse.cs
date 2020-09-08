@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragMouse_1 : MonoBehaviour
+public class DragMouse : MonoBehaviour
 {
 
     Vector3 dist;
@@ -36,7 +36,6 @@ public class DragMouse_1 : MonoBehaviour
     {
         float F = Mathf.Abs((Min.transform.position.x - Znach.gameObject.transform.position.x) * 100f);
         float D = Cub.transform.localScale.x * 100f;
-        //Debug.Log("1=" + " " + F + "/" + "2=" + D);
     }
 
     void OnMouseDown()
@@ -56,8 +55,6 @@ public class DragMouse_1 : MonoBehaviour
             float disY = Input.mousePosition.y - posY;
             float disZ = Input.mousePosition.z - posZ;
             lastPos = Camera.main.ScreenToWorldPoint(new Vector3(disX, disY, disZ));
-            //float F = Mathf.Abs((Min.transform.position.x - Znach.transform.position.x) * 100f);
-            //float D = Mathf.Abs(Cub.transform.localScale.x * 100f);
             
             if (lastPos.x > Min.transform.position.x && lastPos.x < Max.transform.position.x && token == true)
             {
