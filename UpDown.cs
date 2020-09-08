@@ -10,12 +10,12 @@ public class UpDown : MonoBehaviour
     public GameObject Cvecha;
     public GameObject CvechaC;
     public GameObject CvechaGameObject;
-    public GameObject lebedka;
+    public GameObject Lebedka;
 
     List<GameObject> CvechaList = new List<GameObject>();
-    int i = 0;
+    static public int i = 0;
 
-    GameObject CvechaCreate;
+    GameObject cvechaCreate;
     bool cvechabool = false;
     bool token_sound = false;
     Vector3 vectorCreate;
@@ -29,16 +29,45 @@ public class UpDown : MonoBehaviour
     public GameObject AKB;
     public GameObject AKB_1;
 
+
+    void Awake() 
+    {
+        vectorCreate = new Vector3(0f, 22.85f, 0f);
+        var MaxCount = Random.Range(28, 35);
+        i = MaxCount;
+        for(var h = 0; h < MaxCount; h++)
+        {
+            var go = Instantiate(CvechaC, Cvecha.transform);
+            CvechaList.Add(go);
+            CvechaList[h].SetActive(true);
+             
+        }
+
+        for(var h = 0; h < MaxCount; h++)
+        {
+            if(h < (MaxCount - 1))
+            {
+                CvechaList[h+1].transform.position = CvechaList[h].transform.position - vectorCreate;
+            }
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
-        vectorCreate = new Vector3(0f, 2.28f, 0f);
+        Cvecha = CvechaC;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(Min.transform.position.y + " : " + ElementMovement.transform.position.y);
+        if(ElementMovement.transform.position.y > AKB_1.transform.position.y)
+        {
+            speed = 10.0f;
+        }
+        else if(ElementMovement.transform.position.y <= AKB_1.transform.position.y)
+        {
+            speed = 0.8f;
+        }
 
         if (ManagerInput_tumbler.j == 0)
         {
@@ -104,29 +133,12 @@ public class UpDown : MonoBehaviour
 
     public void CreateCvesha()
     {
-        GameObject go;
-        if (cvechabool == false)
-        {
-            CvechaCreate = CvechaC;
-            go = Instantiate(CvechaCreate, Cvecha.transform);
-            CvechaList.Add(go);
-            CvechaC.SetActive(false);
-            Cvecha = CvechaC;
-            go = null;
-            cvechabool = true;
-        }
-        else
-        {
-            CvechaCreate = CvechaC;
-            go = Instantiate(CvechaCreate, Cvecha.transform);
-            CvechaList.Add(go);
-            i++;
-            //CvechaList[i - 1].transform.position = CvechaList[i - 1].transform.position - vectorCreate;
-            CvechaC.SetActive(false);
-            Cvecha = CvechaC;
-            go = null;
-            ForList();
-        }
+        Cvecha = CvechaGameObject;
+    }
+
+    public void DestroyCvesha()
+    {
+        Cvecha = CvechaC;
     }
 
     public void AKB_Create()
@@ -134,4 +146,10 @@ public class UpDown : MonoBehaviour
         Cvecha = CvechaGameObject;
     }
 
+    public void AKB_Destroi()
+    {
+        CvechaList.RemoveAt(i-1);
+        CvechaC.SetActive(true);
+        --i;
+    }
 }
